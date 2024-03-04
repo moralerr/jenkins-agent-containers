@@ -5,6 +5,9 @@ pipeline {
             inheritFrom 'default'
         }
     }
+    triggers {
+        cron('H H * * *')
+    }
     options { disableConcurrentBuilds() }
     environment {
         // Define environment variables
