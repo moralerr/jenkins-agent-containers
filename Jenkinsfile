@@ -9,7 +9,7 @@ pipeline {
     environment {
         // Define environment variables
         IMAGE_NAME = 'jenkins-nodejs-agent'
-        IMAGE_VERSION = '1.0.0'
+        IMAGE_VERSION = '1.0.$BUILD_NUMBER'
         REGISTRY_NAME = 'moralerr'
         REGISTRY_REPO = 'examples'
 
