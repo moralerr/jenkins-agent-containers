@@ -31,11 +31,10 @@ pipeline {
                                 sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
                                 for( folder in files) {
                                     def imageName = folder.path.split('/')[-2]
-                                    // Build the image with tag
-                                    docker.build(imageName: "jenkins-${imageName}-agent-${IMAGE_VERSION}", file: folder + '/Dockerfile')
-                                    
-                                    // Push Image to Docker registry
-                                    sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:${IMAGE_NAME}-${IMAGE_VERSION}"
+
+                                    sh "docker build -t ${imageName}:latest -f ${folder.path} ."
+                                    sh "docker tag ${imageName}:latest ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
+                                    sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
                                     
                                 }
                                 // Logout of registry
