@@ -27,7 +27,7 @@ pipeline {
                             // Login to Docker registry
                             sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
                             // Build Docker image
-                            sh "docker build -t ${IMAGE_NAME}:latest agents/nodejs"
+                            sh "docker build -t jenkins-nodejs-agent:latest -f agents/nodejs ."
                             sh "docker tag ${IMAGE_NAME}:latest ${REGISTRY_NAME}/${REGISTRY_REPO}:${IMAGE_NAME}-${IMAGE_VERSION}"
                             sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:${IMAGE_NAME}-${IMAGE_VERSION}"
                             sh "docker logout"
