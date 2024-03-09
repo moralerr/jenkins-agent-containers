@@ -11,7 +11,6 @@ pipeline {
     options { disableConcurrentBuilds() }
     environment {
         // Define environment variables
-        IMAGE_NAME = 'jenkins-nodejs-agent'
         IMAGE_VERSION = 'latest'
         REGISTRY_NAME = 'moralerr'
         REGISTRY_REPO = 'examples'
@@ -24,13 +23,28 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD' )]) {
 
                         script {
-                            // Login to Docker registry
-                            sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
-                            // Build Docker image
-                            sh "docker build -t jenkins-nodejs-agent:latest -f agents/nodejs/Dockerfile ."
-                            sh "docker tag ${IMAGE_NAME}:latest ${REGISTRY_NAME}/${REGISTRY_REPO}:${IMAGE_NAME}-${IMAGE_VERSION}"
-                            sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:${IMAGE_NAME}-${IMAGE_VERSION}"
-                            sh "docker logout"
+                            // Get the workspace directory
+                            def workspace = pwd()
+
+                            // Loop through subdirectories with Dockerfiles
+                            for (folder in dir(workspace + '/*')) {
+                                if (fileExists(folder + '/Dockerfile')) {
+                                    // Get folder name
+                                    def imageName = folder.split('/')[-1]
+
+                                    // Build the image with tag
+                                    docker.build(imageName: "jenkins-${imageName}-agent-${IMAGE_VERSION}", file: folder + '/Dockerfile')
+
+                                    // Login to Docker registry
+                                    sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
+
+                                    // Push Image to Docker registry
+                                    sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:${IMAGE_NAME}-${IMAGE_VERSION}"
+
+                                    // Logout of registry
+                                    sh "docker logout"
+                                }
+                            }
                         }
                     }
                 }
