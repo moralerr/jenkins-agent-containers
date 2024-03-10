@@ -38,7 +38,7 @@ pipeline {
                             def dockerfiles = []
 
                             // Iterate over the changes and find Dockerfile paths
-                            changes.each { change ->
+                            changes.affectedFiles.each { change ->
                                 change.each { entry ->
                                     def path = entry.path
                                     if (path.contains("Dockerfile")) {
