@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c2bcd47-0f39-4160-a5b1-4edc63f2307a" name="Changes" comment="modify for loop">
+    <list default="true" id="0c2bcd47-0f39-4160-a5b1-4edc63f2307a" name="Changes" comment="build multiple images">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/Jenkinsfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agents/base/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/agents/base/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +67,7 @@
       <updated>1709519378255</updated>
       <workItem from="1709519379313" duration="284000" />
       <workItem from="1709519671234" duration="354000" />
-      <workItem from="1710012148365" duration="1385000" />
+      <workItem from="1710012148365" duration="4923000" />
     </task>
     <task id="LOCAL-00001" summary="Use build-tools for jenkins-agent">
       <option name="closed" value="true" />
@@ -101,11 +101,62 @@
       <option name="project" value="LOCAL" />
       <updated>1710013149174</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="modify for loop">
+      <option name="closed" value="true" />
+      <created>1710013538971</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1710013538971</updated>
+    </task>
+    <task id="LOCAL-00006" summary="test findFiles">
+      <option name="closed" value="true" />
+      <created>1710013983724</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1710013983724</updated>
+    </task>
+    <task id="LOCAL-00007" summary="test findFiles">
+      <option name="closed" value="true" />
+      <created>1710014693252</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1710014693252</updated>
+    </task>
+    <task id="LOCAL-00008" summary="build multiple images">
+      <option name="closed" value="true" />
+      <created>1710017929698</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1710017929698</updated>
+    </task>
+    <task id="LOCAL-00009" summary="build multiple images">
+      <option name="closed" value="true" />
+      <created>1710018341737</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1710018341737</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -113,6 +164,8 @@
     <MESSAGE value="fix path to Dockerfile" />
     <MESSAGE value="Build multiple images" />
     <MESSAGE value="modify for loop" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify for loop" />
+    <MESSAGE value="test findFiles" />
+    <MESSAGE value="build multiple images" />
+    <option name="LAST_COMMIT_MESSAGE" value="build multiple images" />
   </component>
 </project>
