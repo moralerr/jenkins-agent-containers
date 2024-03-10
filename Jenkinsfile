@@ -36,7 +36,7 @@ pipeline {
                                 }
                             }
                             if (changedFiles) {
-                                //sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
+                                sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
 
                                 for (file in changedFiles) {
 
