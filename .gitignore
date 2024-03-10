@@ -5,7 +5,7 @@ target/
 .mvn/
 
 # Ignore IDE specific files
-.idea/*
+.idea/
 .vscode/
 
 # Ignore personal configurations
