@@ -64,15 +64,7 @@
       <updated>1709519378255</updated>
       <workItem from="1709519379313" duration="284000" />
       <workItem from="1709519671234" duration="354000" />
-      <workItem from="1710012148365" duration="22896000" />
-    </task>
-    <task id="LOCAL-00005" summary="modify for loop">
-      <option name="closed" value="true" />
-      <created>1710013538971</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1710013538971</updated>
+      <workItem from="1710012148365" duration="23228000" />
     </task>
     <task id="LOCAL-00006" summary="test findFiles">
       <option name="closed" value="true" />
@@ -458,7 +450,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710086996676</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="make object serialized">
+      <option name="closed" value="true" />
+      <created>1710087230630</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1710087230630</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

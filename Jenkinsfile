@@ -18,6 +18,12 @@ pipeline {
 
     }
     stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your source code repository
+                checkout scm
+            }
+        }
         stage('Build/Push Image') {
             steps {
                 container("dind") {
@@ -25,12 +31,26 @@ pipeline {
 
                         script {
 
-                            def changedFilez = sh(script: 'git diff --name-only HEAD^ HEAD', returnStdout: true).trim().split('\n')
+                            // Get the changed files from the previous build
+                            def changes = currentBuild.changeSets
 
-                            // Print the list of changed files
-                            echo "Changed Files:"
-                            changedFilez.each { filePath ->
-                                echo filePath
+                            // Initialize an empty list to store paths of changed Dockerfiles
+                            def dockerfiles = []
+
+                            // Iterate over the changes and find Dockerfile paths
+                            changes.each { change ->
+                                change.each { entry ->
+                                    def path = entry.path
+                                    if (path.contains("Dockerfile")) {
+                                        dockerfiles.add(path)
+                                    }
+                                }
+                            }
+
+                            // Print out the paths of changed Dockerfiles
+                            echo "Changed Dockerfiles:"
+                            dockerfiles.each { dockerfile ->
+                                echo "- ${dockerfile}"
                             }
 
                             // Login to Docker registry
