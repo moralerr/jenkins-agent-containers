@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c2bcd47-0f39-4160-a5b1-4edc63f2307a" name="Changes" comment="clean up" />
+    <list default="true" id="0c2bcd47-0f39-4160-a5b1-4edc63f2307a" name="Changes" comment="use different node image" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,23 +64,7 @@
       <updated>1709519378255</updated>
       <workItem from="1709519379313" duration="284000" />
       <workItem from="1709519671234" duration="354000" />
-      <workItem from="1710012148365" duration="27266000" />
-    </task>
-    <task id="LOCAL-00017" summary="add angular cli to node image">
-      <option name="closed" value="true" />
-      <created>1710040797787</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1710040797787</updated>
-    </task>
-    <task id="LOCAL-00018" summary="test changed files logic">
-      <option name="closed" value="true" />
-      <created>1710041317807</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1710041317807</updated>
+      <workItem from="1710012148365" duration="27986000" />
     </task>
     <task id="LOCAL-00019" summary="add npm to nodejs image">
       <option name="closed" value="true" />
@@ -458,7 +442,23 @@
       <option name="project" value="LOCAL" />
       <updated>1710090950689</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="use node builder as base image">
+      <option name="closed" value="true" />
+      <created>1710091814723</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1710091814723</updated>
+    </task>
+    <task id="LOCAL-00067" summary="use different node image">
+      <option name="closed" value="true" />
+      <created>1710092652023</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1710092652023</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -477,8 +477,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="build multiple images" />
-    <MESSAGE value="fix copy path in base image" />
     <MESSAGE value="add maven image" />
     <MESSAGE value="build only changes" />
     <MESSAGE value="revert Jenkinsfile changes" />
@@ -502,6 +500,8 @@
     <MESSAGE value="make object serialized" />
     <MESSAGE value="Do the needful" />
     <MESSAGE value="clean up" />
-    <option name="LAST_COMMIT_MESSAGE" value="clean up" />
+    <MESSAGE value="use node builder as base image" />
+    <MESSAGE value="use different node image" />
+    <option name="LAST_COMMIT_MESSAGE" value="use different node image" />
   </component>
 </project>
