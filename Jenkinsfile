@@ -41,7 +41,7 @@ pipeline {
                             if (changedFiles) {
                                 // Login to Docker registry
                                 sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
-                                echo "Building Image..."
+                                println "Building Image..."
                                 for (file in changedFiles) {
                                     echo "Processing: $file.path"
 
