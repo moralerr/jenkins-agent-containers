@@ -23,6 +23,9 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
 
                         script {
+                            sh """
+                                    docker login --username $DOCKER_USERNAME --password-stdin <<<"$DOCKER_PASSWORD"
+                                """
 
                             def changedFiles = []
 
@@ -36,9 +39,6 @@ pipeline {
                                 }
                             }
                             if (changedFiles) {
-                                sh """
-                                    docker login --username $DOCKER_USERNAME --password-stdin <<<"$DOCKER_PASSWORD"
-                                """
 
                                 for (file in changedFiles) {
 
@@ -51,10 +51,12 @@ pipeline {
 //                                    sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
 
                                 }
-                                //sh "docker logout"
+
                             } else {
                                 echo "No changes detected between this build and the previous one."
                             }
+
+                            sh "docker logout"
                         }
                     }
                 }
