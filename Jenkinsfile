@@ -60,7 +60,7 @@ pipeline {
     }
 }
 
-@NonCPS
+
 def getChangedFiles() {
     def changedFiles = []
 

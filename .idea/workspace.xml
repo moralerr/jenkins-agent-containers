@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c2bcd47-0f39-4160-a5b1-4edc63f2307a" name="Changes" comment="move some logic to a function" />
+    <list default="true" id="0c2bcd47-0f39-4160-a5b1-4edc63f2307a" name="Changes" comment="make object serialized" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,7 +64,7 @@
       <updated>1709519378255</updated>
       <workItem from="1709519379313" duration="284000" />
       <workItem from="1709519671234" duration="354000" />
-      <workItem from="1710012148365" duration="21344000" />
+      <workItem from="1710012148365" duration="21657000" />
     </task>
     <task id="LOCAL-00001" summary="Use build-tools for jenkins-agent">
       <option name="closed" value="true" />
@@ -450,7 +450,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710085042248</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="make object serialized">
+      <option name="closed" value="true" />
+      <created>1710085931534</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1710085931534</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -469,7 +477,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Build multiple images" />
     <MESSAGE value="modify for loop" />
     <MESSAGE value="test findFiles" />
     <MESSAGE value="build multiple images" />
@@ -494,6 +501,7 @@
     <MESSAGE value="try to login earlier" />
     <MESSAGE value="test" />
     <MESSAGE value="move some logic to a function" />
-    <option name="LAST_COMMIT_MESSAGE" value="move some logic to a function" />
+    <MESSAGE value="make object serialized" />
+    <option name="LAST_COMMIT_MESSAGE" value="make object serialized" />
   </component>
 </project>
