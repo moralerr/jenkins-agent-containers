@@ -18,12 +18,6 @@ pipeline {
 
     }
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout your source code repository
-                checkout scm
-            }
-        }
         stage('Build/Push Image') {
             steps {
                 container("dind") {
