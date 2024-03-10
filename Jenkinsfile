@@ -23,28 +23,6 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD' )]) {
 
                         script {
-                            def changedFiles = []
-
-                            if (currentBuild.changeSets) {
-                                for (changeSet in currentBuild.changeSets) {
-                                    for (item in changeSet.items) {
-                                        // Get affected files for each commit
-                                        def affectedFiles = item.affectedFiles
-                                        changedFiles.addAll(affectedFiles)
-                                    }
-                                }
-                            }
-
-                            if (changedFiles) {
-                                echo "List of changed files:"
-                                for (file in changedFiles) {
-                                    echo "* $file"
-                                }
-                            } else {
-                                echo "No changes detected between this build and the previous one."
-                            }
-
-
                             def files = findFiles(glob: '**/Dockerfile')
                             
                             if(files.length > 0) {
