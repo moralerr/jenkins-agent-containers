@@ -30,17 +30,25 @@ pipeline {
                                     for (item in changeSet.items) {
                                         // Get affected files for each commit
                                         def affectedFiles = item.affectedFiles
-                                        changedFiles.addAll(affectedFiles)
+
+                                        // Filter files containing "Dockerfile" in the path
+                                        def dockerFiles = affectedFiles.findAll { file -> file =~ /Dockerfile/ }
+                                        changedFiles.addAll(dockerFiles)
                                     }
                                 }
                             }
 
                             if (changedFiles) {
-                                echo "List of changed files:"
+                                echo "List of changed files containing Dockerfile:"
                                 for (file in changedFiles) {
                                     echo "* $file"
                                 }
-//                                def files = findFiles(glob: '**/Dockerfile')
+                            } else {
+                                echo "No changes detected to files containing Dockerfile."
+                            }
+
+
+                            //                                def files = findFiles(glob: '**/Dockerfile')
 //
 //                                if(files.length > 0) {
 //                                    // Login to Docker registry
@@ -55,10 +63,6 @@ pipeline {
 //                                    }
 //                                    // Logout of registry
 //                                    sh "docker logout"
-//                                }
-                            } else {
-                                echo "No changes detected between this build and the previous one."
-                            }
                         }
                     }
                 }
