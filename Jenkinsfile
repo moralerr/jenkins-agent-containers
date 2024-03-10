@@ -78,7 +78,7 @@ def getChangedFiles() {
         }
     }
 
-    return changedFiles
+    return changedFiles.unique()
 }
 
 
