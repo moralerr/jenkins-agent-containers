@@ -25,28 +25,6 @@ pipeline {
 
                         script {
 
-                            // Get the changed files from the previous build
-                            def changes = currentBuild.changeSets
-
-                            // Initialize an empty list to store paths of changed Dockerfiles
-                            def dockerfiles = []
-
-                            // Iterate over the changes and find Dockerfile paths
-                            changes.affectedFiles.each { change ->
-                                change.each { entry ->
-                                    def path = entry.path
-                                    if (path.contains("Dockerfile")) {
-                                        dockerfiles.add(path)
-                                    }
-                                }
-                            }
-
-                            // Print out the paths of changed Dockerfiles
-                            echo "Changed Dockerfiles:"
-                            dockerfiles.each { dockerfile ->
-                                echo "- ${dockerfile}"
-                            }
-
                             // Login to Docker registry
                             sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
 
@@ -92,7 +70,7 @@ def getChangedFiles() {
         currentBuild.changeSets.each { changeSet ->
             changeSet.items.each { item ->
                 def affectedFiles = item.affectedFiles.collect {
-                    [path: it.path, editType: it.editType] // Accessing editType directly
+                    [path: it.path] // Accessing editType directly
                 }
                 changedFiles.addAll(affectedFiles)
             }
