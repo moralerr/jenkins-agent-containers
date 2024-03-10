@@ -9,7 +9,6 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /tmp/* /var/cache/* /var/lib/apt/lists/*
 
-
 RUN npm i -g @angular/cli
 
 ENV PATH="$PATH:/usr/local/sbin:/usr/local/bin"

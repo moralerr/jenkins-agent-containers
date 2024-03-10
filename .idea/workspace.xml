@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c2bcd47-0f39-4160-a5b1-4edc63f2307a" name="Changes" comment="check for changed files" />
+    <list default="true" id="0c2bcd47-0f39-4160-a5b1-4edc63f2307a" name="Changes" comment="Only build modified Dockerfiles">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,7 +66,7 @@
       <updated>1709519378255</updated>
       <workItem from="1709519379313" duration="284000" />
       <workItem from="1709519671234" duration="354000" />
-      <workItem from="1710012148365" duration="15017000" />
+      <workItem from="1710012148365" duration="16085000" />
     </task>
     <task id="LOCAL-00001" summary="Use build-tools for jenkins-agent">
       <option name="closed" value="true" />
@@ -298,7 +300,23 @@
       <option name="project" value="LOCAL" />
       <updated>1710049029853</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="check for changed files">
+      <option name="closed" value="true" />
+      <created>1710049309227</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1710049309227</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Only build modified Dockerfiles">
+      <option name="closed" value="true" />
+      <created>1710049872972</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1710049872972</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -338,6 +356,7 @@
     <MESSAGE value="remove base image" />
     <MESSAGE value="add npm to path" />
     <MESSAGE value="check for changed files" />
-    <option name="LAST_COMMIT_MESSAGE" value="check for changed files" />
+    <MESSAGE value="Only build modified Dockerfiles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Only build modified Dockerfiles" />
   </component>
 </project>
