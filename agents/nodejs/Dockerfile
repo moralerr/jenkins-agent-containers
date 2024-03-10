@@ -10,6 +10,6 @@ RUN apt-get update \
   && rm -rf /tmp/* /var/cache/* /var/lib/apt/lists/*
 
 
-RUN npm ci -g @angular/cli
+RUN npm i -g @angular/cli
 
 USER jenkins
