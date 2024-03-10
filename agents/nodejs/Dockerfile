@@ -5,8 +5,10 @@ USER root
 RUN apt-get update \
   && apt-get --yes --no-install-recommends install \
     nodejs \
+    npm \
   && apt-get clean \
   && rm -rf /tmp/* /var/cache/* /var/lib/apt/lists/*
+
 
 RUN npm ci -g @angular/cli
 
