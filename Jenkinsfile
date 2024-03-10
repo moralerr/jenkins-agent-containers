@@ -42,7 +42,7 @@ pipeline {
 
                                     echo "Processing: $file.path"
 
-                                    def imageName = file.path.split('/')[-2]
+                                    //def imageName = file.path.split('/')[-2]
 
 //                                    sh "docker build -t ${imageName}:latest -f ${file.path} ."
 //                                    sh "docker tag ${imageName}:latest ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
