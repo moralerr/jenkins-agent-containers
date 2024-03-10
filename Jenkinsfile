@@ -40,12 +40,10 @@ pipeline {
                                     // Your Docker image build, tag, and push commands here
                                     // Make sure to properly handle the 'file' object here
                                     // For example:
-                                    /*
-                                    def imageName = file.path.split('/')[-2]
+                                    /*def imageName = file.path.split('/')[-2]
                                     sh "docker build -t ${imageName}:latest -f ${file.path} ."
                                     sh "docker tag ${imageName}:latest ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
-                                    sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
-                                    */
+                                    sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"*/
                                 }
 
                             } else {
