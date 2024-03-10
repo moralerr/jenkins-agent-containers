@@ -55,7 +55,7 @@ pipeline {
                                 echo "No changes detected between this build and the previous one."
                             }
 
-                            sh "docker logout"
+                            sh 'docker logout'
                         }
                     }
                 }
