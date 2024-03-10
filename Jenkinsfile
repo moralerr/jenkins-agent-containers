@@ -67,8 +67,8 @@ def getChangedFiles() {
     if (currentBuild.changeSets) {
         currentBuild.changeSets.each { changeSet ->
             changeSet.items.each { item ->
-                def affectedFiles = item.affectedFiles.collect {
-                    [path: it.path] // Accessing editType directly
+                def affectedFiles = item.affectedFiles.findAll { it.path.contains("Dockerfile") }.collect {
+                    [path: it.path]
                 }
                 changedFiles.addAll(affectedFiles)
             }
@@ -77,4 +77,5 @@ def getChangedFiles() {
 
     return changedFiles
 }
+
 
