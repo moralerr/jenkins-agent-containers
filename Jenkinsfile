@@ -36,7 +36,7 @@ pipeline {
                                 }
                             }
                             if (changedFiles) {
-                                sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
+                                //sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
 
                                 for (file in changedFiles) {
 
@@ -44,12 +44,12 @@ pipeline {
 
                                     def imageName = file.path.split('/')[-2]
 
-                                    sh "docker build -t ${imageName}:latest -f ${file.path} ."
-                                    sh "docker tag ${imageName}:latest ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
-                                    sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
+//                                    sh "docker build -t ${imageName}:latest -f ${file.path} ."
+//                                    sh "docker tag ${imageName}:latest ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
+//                                    sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
 
                                 }
-                                sh "docker logout"
+                                //sh "docker logout"
                             } else {
                                 echo "No changes detected between this build and the previous one."
                             }
