@@ -61,6 +61,7 @@ pipeline {
 }
 
 
+@NonCPS
 def getChangedFiles() {
     def changedFiles = []
 
@@ -68,7 +69,7 @@ def getChangedFiles() {
         currentBuild.changeSets.each { changeSet ->
             changeSet.items.each { item ->
                 def affectedFiles = item.affectedFiles.collect {
-                    [path: it.path, editType: it.editType.name()] // Convert to serializable format
+                    [path: it.path, editType: it.editType] // Accessing editType directly
                 }
                 changedFiles.addAll(affectedFiles)
             }
@@ -77,3 +78,4 @@ def getChangedFiles() {
 
     return changedFiles
 }
+
