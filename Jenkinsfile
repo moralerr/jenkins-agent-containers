@@ -23,6 +23,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
 
                         script {
+
                             def changedFiles = []
 
                             if (currentBuild.changeSets) {
@@ -30,19 +31,15 @@ pipeline {
                                     for (item in changeSet.items) {
                                         // Get affected files for each commit
                                         def affectedFiles = item.affectedFiles
-
-                                        // Filter files containing "Dockerfile" in the path
-                                        def dockerFiles = affectedFiles.findAll { file -> file.path.contains("Dockerfile") }
-                                        changedFiles.addAll(dockerFiles)
+                                        changedFiles.addAll(affectedFiles)
                                     }
                                 }
                             }
-
                             if (changedFiles) {
-                                // Login to Docker registry
                                 sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
 
                                 for (file in changedFiles) {
+
                                     echo "Processing: $file.path"
 
                                     def imageName = file.path.split('/')[-2]
@@ -52,10 +49,9 @@ pipeline {
                                     sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
 
                                 }
-                                // Logout of registry
                                 sh "docker logout"
                             } else {
-                                echo "No changes detected to files containing Dockerfile."
+                                echo "No changes detected between this build and the previous one."
                             }
                         }
                     }
