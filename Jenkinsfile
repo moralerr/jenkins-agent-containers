@@ -34,7 +34,7 @@ pipeline {
                                         affectedFiles.findAll { file -> println file.path }
 
                                         // Filter files containing "Dockerfile" in the path
-                                        def dockerFiles = affectedFiles.findAll { file -> file.path =~ /Dockerfile/ }
+                                        def dockerFiles = affectedFiles.findAll { file -> file.path.contains("Dockerfile") }
                                         changedFiles.addAll(dockerFiles)
                                     }
                                 }
@@ -43,7 +43,7 @@ pipeline {
                             if (changedFiles) {
                                 echo "List of changed files containing Dockerfile:"
                                 for (file in changedFiles) {
-                                    echo "* $file"
+                                    echo "* $file.path"
                                 }
                             } else {
                                 echo "No changes detected to files containing Dockerfile."
