@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c2bcd47-0f39-4160-a5b1-4edc63f2307a" name="Changes" comment="revert Jenkinsfile changes">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="0c2bcd47-0f39-4160-a5b1-4edc63f2307a" name="Changes" comment="change install cmd">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agents/maven/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/agents/maven/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +67,7 @@
       <updated>1709519378255</updated>
       <workItem from="1709519379313" duration="284000" />
       <workItem from="1709519671234" duration="354000" />
-      <workItem from="1710012148365" duration="7544000" />
+      <workItem from="1710012148365" duration="8461000" />
     </task>
     <task id="LOCAL-00001" summary="Use build-tools for jenkins-agent">
       <option name="closed" value="true" />
@@ -173,7 +173,23 @@
       <option name="project" value="LOCAL" />
       <updated>1710032808252</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="remove openjdk from maven">
+      <option name="closed" value="true" />
+      <created>1710033589296</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1710033589296</updated>
+    </task>
+    <task id="LOCAL-00015" summary="change install cmd">
+      <option name="closed" value="true" />
+      <created>1710033652363</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1710033652363</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,6 +218,8 @@
     <MESSAGE value="add maven image" />
     <MESSAGE value="build only changes" />
     <MESSAGE value="revert Jenkinsfile changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="revert Jenkinsfile changes" />
+    <MESSAGE value="remove openjdk from maven" />
+    <MESSAGE value="change install cmd" />
+    <option name="LAST_COMMIT_MESSAGE" value="change install cmd" />
   </component>
 </project>
