@@ -64,23 +64,7 @@
       <updated>1709519378255</updated>
       <workItem from="1709519379313" duration="284000" />
       <workItem from="1709519671234" duration="354000" />
-      <workItem from="1710012148365" duration="22523000" />
-    </task>
-    <task id="LOCAL-00003" summary="Build multiple images">
-      <option name="closed" value="true" />
-      <created>1710012824354</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1710012824354</updated>
-    </task>
-    <task id="LOCAL-00004" summary="modify for loop">
-      <option name="closed" value="true" />
-      <created>1710013149174</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1710013149174</updated>
+      <workItem from="1710012148365" duration="22896000" />
     </task>
     <task id="LOCAL-00005" summary="modify for loop">
       <option name="closed" value="true" />
@@ -458,7 +442,23 @@
       <option name="project" value="LOCAL" />
       <updated>1710086609212</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="make object serialized">
+      <option name="closed" value="true" />
+      <created>1710086849494</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1710086849494</updated>
+    </task>
+    <task id="LOCAL-00053" summary="make object serialized">
+      <option name="closed" value="true" />
+      <created>1710086996676</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1710086996676</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
