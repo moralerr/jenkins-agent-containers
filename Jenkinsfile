@@ -31,7 +31,7 @@ pipeline {
                                         // Get affected files for each commit
                                         def affectedFiles = item.affectedFiles
 
-                                        echo affectedFiles
+                                        println affectedFiles
 
                                         // Filter files containing "Dockerfile" in the path
                                         def dockerFiles = affectedFiles.findAll { file -> file.path =~ /Dockerfile/ }
