@@ -23,9 +23,8 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
 
                         script {
-                            sh """
-                                    docker login --username $DOCKER_USERNAME --password-stdin <<<"$DOCKER_PASSWORD"
-                                """
+                            // Login to Docker registry
+                            sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
 
                             def changedFiles = []
 
