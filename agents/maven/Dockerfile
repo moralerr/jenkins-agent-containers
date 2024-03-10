@@ -5,7 +5,7 @@ USER root
 # Install Maven
 RUN apt-get update && apt install -y --no-install-recommends maven
 
-# Add Maven to PATH
+# Add Maven to PATH. May not be needed
 ENV PATH="$PATH:/usr/local/sbin:/usr/local/bin"
 
 # Additional steps (optional)
