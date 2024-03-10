@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c2bcd47-0f39-4160-a5b1-4edc63f2307a" name="Changes" comment="build multiple images">
+    <list default="true" id="0c2bcd47-0f39-4160-a5b1-4edc63f2307a" name="Changes" comment="add maven image">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/agents/base/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/agents/base/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/Jenkinsfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/agents/maven/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/agents/maven/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +68,7 @@
       <updated>1709519378255</updated>
       <workItem from="1709519379313" duration="284000" />
       <workItem from="1709519671234" duration="354000" />
-      <workItem from="1710012148365" duration="4923000" />
+      <workItem from="1710012148365" duration="6744000" />
     </task>
     <task id="LOCAL-00001" summary="Use build-tools for jenkins-agent">
       <option name="closed" value="true" />
@@ -141,7 +142,23 @@
       <option name="project" value="LOCAL" />
       <updated>1710018341737</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="fix copy path in base image">
+      <option name="closed" value="true" />
+      <created>1710030383550</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1710030383550</updated>
+    </task>
+    <task id="LOCAL-00011" summary="add maven image">
+      <option name="closed" value="true" />
+      <created>1710031460571</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1710031460571</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,6 +183,8 @@
     <MESSAGE value="modify for loop" />
     <MESSAGE value="test findFiles" />
     <MESSAGE value="build multiple images" />
-    <option name="LAST_COMMIT_MESSAGE" value="build multiple images" />
+    <MESSAGE value="fix copy path in base image" />
+    <MESSAGE value="add maven image" />
+    <option name="LAST_COMMIT_MESSAGE" value="add maven image" />
   </component>
 </project>
