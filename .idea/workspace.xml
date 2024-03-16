@@ -67,15 +67,8 @@
       <updated>1709519378255</updated>
       <workItem from="1709519379313" duration="284000" />
       <workItem from="1709519671234" duration="354000" />
-      <workItem from="1710012148365" duration="31874000" />
-    </task>
-    <task id="LOCAL-00025" summary="check for changed files">
-      <option name="closed" value="true" />
-      <created>1710047733687</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1710047733687</updated>
+      <workItem from="1710012148365" duration="33081000" />
+      <workItem from="1710555221736" duration="326000" />
     </task>
     <task id="LOCAL-00026" summary="check for changed files">
       <option name="closed" value="true" />
@@ -461,7 +454,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710112580316</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="try different node base image">
+      <option name="closed" value="true" />
+      <created>1710113216276</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1710113216276</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
