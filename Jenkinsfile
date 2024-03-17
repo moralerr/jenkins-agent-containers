@@ -19,6 +19,10 @@ pipeline {
         REGISTRY_REPO = 'examples'
 
     }
+    parameters {
+        booleanParam(name: 'MAVEN', defaultValue: false, description: '')
+        booleanParam(name: 'NODEJS', defaultValue: false, description: '')
+    }
     stages {
         stage('Build/Push Image') {
             steps {
@@ -31,6 +35,9 @@ pipeline {
 
                             // Call the function to get the changed files
                             def changedFiles = getChangedFiles()
+
+                            def mavenParamBoolean = isParameterSetToTrue("MAVEN")
+                            println mavenParamBoolean
 
                             if (changedFiles) {
                                 // Login to Docker registry
@@ -82,5 +89,10 @@ def getChangedFiles() {
 
     return changedFiles.unique()
 }
+
+def isParameterSetToTrue(paramName) {
+    return params.containsKey(paramName) && params.get(paramName).equalsIgnoreCase("true")
+}
+
 
 
