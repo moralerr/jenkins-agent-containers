@@ -14,7 +14,3 @@ RUN npm install -g @angular/cli
 
 # Switch back to the Jenkins user
 USER jenkins
-
-# Verify installation
-RUN node --version && npm --version && ng --version
-
