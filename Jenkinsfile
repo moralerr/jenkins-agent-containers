@@ -91,7 +91,7 @@ def getChangedFiles() {
 }
 
 def isParameterSetToTrue(paramName) {
-    return params.containsKey(paramName) && params.get(paramName).equalsIgnoreCase("true")
+    return params.containsKey(paramName) && params.get(paramName).toString().equalsIgnoreCase("true")
 }
 
 
