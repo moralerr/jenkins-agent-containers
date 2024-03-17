@@ -9,7 +9,10 @@ pipeline {
     triggers {
         cron('H H * * *')
     }
-    options { disableConcurrentBuilds() }
+    options {
+        disableConcurrentBuilds()
+        timestamps()
+    }
     environment {
         // Define environment variables
         IMAGE_VERSION = 'latest'
