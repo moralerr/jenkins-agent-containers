@@ -11,7 +11,6 @@ pipeline {
     }
     options {
         disableConcurrentBuilds()
-        timestamps()
     }
     environment {
         // Define environment variables
