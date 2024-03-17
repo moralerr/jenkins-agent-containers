@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM jenkins/inbound-agent:3206.vb_15dcf73f6a_9-3
 
 USER root
@@ -5,15 +6,11 @@ USER root
 # Install Maven
 RUN apt-get update && apt install -y --no-install-recommends maven
 
-# Add Maven to PATH. May not be needed
-ENV PATH="$PATH:/usr/local/sbin:/usr/local/bin"
+# Set MAVEN_HOME
+ENV MAVEN_HOME /usr/share/maven
 
-# Additional steps (optional)
-#  * Set MAVEN_HOME (optional, but recommended for some tools)
-#  * Copy your pom.xml and project files
-#  * Set working directory
+# Add Maven and MAVEN_HOME to PATH
+ENV PATH="$PATH:$MAVEN_HOME/bin"
 
-# CMD (optional)
-#  * Specify the command to run Maven (e.g., mvn clean install)
-
+# Switch back to jenkins user
 USER jenkins

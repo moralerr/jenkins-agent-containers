@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 FROM jenkins/inbound-agent:3206.vb_15dcf73f6a_9-3
 
 # Switch to root user for installation
