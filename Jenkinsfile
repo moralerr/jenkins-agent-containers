@@ -31,21 +31,16 @@ pipeline {
 
                         script {
 
-
-
                             // Call the function to get the changed files
                             def changedFiles = getChangedFiles()
-
-                            def imageName = file.path.split('/')[-2]
-
-                            def mavenParamBoolean = isParameterSetToTrue(imageName.toString().toUpperCase())
-                            println mavenParamBoolean
 
                             if (changedFiles) {
                                 // Login to Docker registry
                                 sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
 
                                 for (file in changedFiles) {
+
+                                    def imageName = file.path.split('/')[-2]
 
                                     echo "Processing: ${file.path}"
 
