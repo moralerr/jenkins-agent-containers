@@ -25,9 +25,8 @@ pipeline {
     stages {
         stage('Build/Push Image') {
             steps {
-                container("dind") {
+                container('dind') {
                     withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-
                         script {
                             def buildTriggeredByCron = currentBuild.getBuildCauses('org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty$CronTrigger') != null
                             def changedFiles = getChangedFiles()
@@ -37,9 +36,15 @@ pipeline {
                                 sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
 
                                 def filesToProcess = changedFiles ?: [[path: 'Dockerfile']]
-                                
+
                                 for (file in filesToProcess) {
                                     def imageName = file.path.split('/')[-2]
+                                    if (file.path.split('/').length > 1) {
+                                        imageName = file.path.split('/')[-2]
+                                    } else {
+                                        imageName = file.path.split('/')[0] // Fallback to the first element, or handle as needed
+                                    }
+
                                     echo "Processing: ${file.path}"
 
                                     // Docker image build, tag, and push commands
@@ -49,9 +54,8 @@ pipeline {
                                 }
 
                                 sh 'docker logout'
-
                             } else {
-                                echo "No changes detected between this build and the previous one."
+                                echo 'No changes detected between this build and the previous one.'
                             }
                         }
                     }
@@ -67,13 +71,13 @@ def getChangedFiles() {
     if (currentBuild.changeSets) {
         currentBuild.changeSets.each { changeSet ->
             changeSet.items.each { item ->
-                def affectedFiles = item.affectedFiles.findAll { it.path.contains("Dockerfile") }.collect {
+                def affectedFiles = item.affectedFiles.findAll { it.path.contains('Dockerfile') }.collect {
                     [path: it.path]
-                }
-                changedFiles.addAll(affectedFiles)
             }
+                changedFiles.addAll(affectedFiles)
         }
     }
+}
 
     return changedFiles.unique()
 }
