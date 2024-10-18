@@ -25,8 +25,9 @@ pipeline {
     stages {
         stage('Build/Push Image') {
             steps {
-                container('dind') {
+                container("dind") {
                     withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+
                         script {
                             def buildTriggeredByCron = currentBuild.getBuildCauses('org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty$CronTrigger') != null
                             def changedFiles = getChangedFiles()
@@ -34,9 +35,11 @@ pipeline {
                             def filesToProcess = []
 
                             if (buildTriggeredByCron) {
+                                echo "Build triggered by cron job. Processing all Dockerfiles."
                                 // If build is triggered by cron, build all Dockerfiles under 'agents'
                                 filesToProcess = findAllDockerfiles('agents')
                             } else if (changedFiles) {
+                                echo "Build triggered by changes in files."
                                 // If changes detected, only process the changed Dockerfiles
                                 filesToProcess = changedFiles
                             }
@@ -48,7 +51,7 @@ pipeline {
                                 for (file in filesToProcess) {
                                     def imageName
                                     def pathSegments = file.path.split('/')
-
+                                    
                                     if (pathSegments.length > 1) {
                                         imageName = pathSegments[-2]  // Use the folder name as the image name
                                     } else {
@@ -58,14 +61,14 @@ pipeline {
                                     echo "Processing: ${file.path}"
 
                                     // Docker image build, tag, and push commands
-                                    sh "docker build -t ${imageName}:latest -f ${file.path} ."
+                                    sh "docker build -t ${imageName}:latest -f ${file.path} ${file.path.substring(0, file.path.lastIndexOf('/'))}"
                                     sh "docker tag ${imageName}:latest ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
                                     sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
                                 }
 
                                 sh 'docker logout'
                             } else {
-                                echo 'No changes detected between this build and the previous one.'
+                                echo "No changes detected between this build and the previous one."
                             }
                         }
                     }
@@ -90,13 +93,13 @@ def getChangedFiles() {
     if (currentBuild.changeSets) {
         currentBuild.changeSets.each { changeSet ->
             changeSet.items.each { item ->
-                def affectedFiles = item.affectedFiles.findAll { it.path.contains('Dockerfile') }.collect {
+                def affectedFiles = item.affectedFiles.findAll { it.path.contains("Dockerfile") }.collect {
                     [path: it.path]
-            }
+                }
                 changedFiles.addAll(affectedFiles)
+            }
         }
     }
-}
 
     return changedFiles.unique()
 }
