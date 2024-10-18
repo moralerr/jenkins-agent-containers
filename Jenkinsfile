@@ -28,7 +28,11 @@ pipeline {
                 container('dind') {
                     withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         script {
-                            def buildTriggeredByCron = currentBuild.getBuildCauses('org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty$CronTrigger') != null
+                            // Directly check if the build was triggered by cron or not
+                            def buildCause = currentBuild.rawBuild.getCauses()[0].toString()
+                            echo "Build cause: ${buildCause}"
+
+                            def buildTriggeredByCron = buildCause.contains('TimerTriggerCause')
                             def changedFiles = getChangedFiles()
 
                             def filesToProcess = []
@@ -38,7 +42,7 @@ pipeline {
                                 // If build is triggered by cron, build all Dockerfiles under 'agents'
                                 filesToProcess = findAllDockerfiles('agents')
                             } else if (changedFiles) {
-                                echo 'Build triggered by changes in files.'
+                                echo 'Build triggered by changes in Dockerfiles.'
                                 // If changes detected, only process the changed Dockerfiles
                                 filesToProcess = changedFiles
                             } else {
