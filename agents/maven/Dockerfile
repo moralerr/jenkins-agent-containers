@@ -14,4 +14,3 @@ ENV PATH="$PATH:$MAVEN_HOME/bin"
 
 # Switch back to jenkins user
 USER jenkins
-
