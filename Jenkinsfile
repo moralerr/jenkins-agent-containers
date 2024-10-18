@@ -68,7 +68,7 @@ pipeline {
                                     echo "Processing: ${filePath}"
 
                                     // Docker image build, tag, and push commands
-                                    sh "docker build -t ${imageName}:latest -f ${filePath}"
+                                    sh "docker build -t ${imageName}:latest -f ${filePath} ${filePath.substring(0, filePath.lastIndexOf('/'))}"
                                     sh "docker tag ${imageName}:latest ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
                                     sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
                                 }
