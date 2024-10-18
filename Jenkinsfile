@@ -38,11 +38,14 @@ pipeline {
                                 def filesToProcess = changedFiles ?: [[path: 'Dockerfile']]
 
                                 for (file in filesToProcess) {
-                                    def imageName = file.path.split('/')[-2]
-                                    if (file.path.split('/').length > 1) {
-                                        imageName = file.path.split('/')[-2]
+                                    def imageName
+
+                                    // Safely handle the file path based on the number of segments
+                                    def pathSegments = file.path.split('/')
+                                    if (pathSegments.length > 1) {
+                                        imageName = pathSegments[-2]  // Use the parent directory name as the image name
                                     } else {
-                                        imageName = file.path.split('/')[0] // Fallback to the first element, or handle as needed
+                                        imageName = pathSegments[0]   // Fallback: use the file name if no parent directory exists
                                     }
 
                                     echo "Processing: ${file.path}"
