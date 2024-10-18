@@ -31,21 +31,28 @@ pipeline {
                             def buildTriggeredByCron = currentBuild.getBuildCauses('org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty$CronTrigger') != null
                             def changedFiles = getChangedFiles()
 
-                            if (changedFiles || buildTriggeredByCron) {
+                            def filesToProcess = []
+
+                            if (buildTriggeredByCron) {
+                                // If build is triggered by cron, build all Dockerfiles under 'agents'
+                                filesToProcess = findAllDockerfiles('agents')
+                            } else if (changedFiles) {
+                                // If changes detected, only process the changed Dockerfiles
+                                filesToProcess = changedFiles
+                            }
+
+                            if (filesToProcess) {
                                 // Login to Docker registry
                                 sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
 
-                                def filesToProcess = changedFiles ?: [[path: 'Dockerfile']]
-
                                 for (file in filesToProcess) {
                                     def imageName
-
-                                    // Safely handle the file path based on the number of segments
                                     def pathSegments = file.path.split('/')
+
                                     if (pathSegments.length > 1) {
-                                        imageName = pathSegments[-2]  // Use the parent directory name as the image name
+                                        imageName = pathSegments[-2]  // Use the folder name as the image name
                                     } else {
-                                        imageName = pathSegments[0]   // Fallback: use the file name if no parent directory exists
+                                        imageName = pathSegments[0]   // Fallback for unusual paths
                                     }
 
                                     echo "Processing: ${file.path}"
@@ -66,6 +73,15 @@ pipeline {
             }
         }
     }
+}
+
+// Function to find all Dockerfiles in the 'agents' directory
+def findAllDockerfiles(String directory) {
+    def dockerfiles = []
+    dir(directory) {
+        dockerfiles = findFiles(glob: '**/Dockerfile').collect { [path: it.path] }
+    }
+    return dockerfiles
 }
 
 def getChangedFiles() {
