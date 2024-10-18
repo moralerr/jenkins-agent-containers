@@ -21,13 +21,13 @@ pipeline {
     parameters {
         booleanParam(name: 'MAVEN', defaultValue: false, description: 'Build the Maven agent image')
         booleanParam(name: 'NODEJS', defaultValue: false, description: 'Build the NodeJS agent image')
+    // Add more boolean params dynamically later
     }
     stages {
         stage('Build/Push Image') {
             steps {
-                container("dind") {
+                container('dind') {
                     withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-
                         script {
                             // Directly check if the build was triggered by cron or not
                             def buildCause = currentBuild.rawBuild.getCauses()[0].toString()
@@ -40,27 +40,26 @@ pipeline {
 
                             // Handle cron builds
                             if (buildTriggeredByCron) {
-                                echo "Build triggered by cron job. Processing all Dockerfiles."
+                                echo 'Build triggered by cron job. Processing all Dockerfiles.'
                                 filesToProcess = findAllDockerfiles('agents')
-
-                            } else if (params.MAVEN || params.NODEJS) {
-                                echo "Manual build triggered with boolean parameters."
-
-                                // Check which boolean parameters are selected and build corresponding images
-                                if (params.MAVEN) {
-                                    echo "Building Maven image"
-                                    filesToProcess.add([path: 'agents/maven/Dockerfile'])
-                                }
-                                if (params.NODEJS) {
-                                    echo "Building NodeJS image"
-                                    filesToProcess.add([path: 'agents/nodejs/Dockerfile'])
-                                }
-
-                            } else if (changedFiles) {
-                                echo "Build triggered by changes in Dockerfiles."
-                                filesToProcess = changedFiles
                             } else {
-                                echo "No Dockerfile changes detected and not a cron build."
+                                // Check for any boolean params that are selected
+                                params.each { paramName, paramValue ->
+                                    if (paramValue && paramName.toUpperCase() == paramName) {
+                                        def lowerCaseParam = paramName.toLowerCase()
+                                        def dockerfilePath = "agents/${lowerCaseParam}/Dockerfile"
+                                        echo "Building image for ${paramName} using path ${dockerfilePath}"
+                                        filesToProcess.add([path: dockerfilePath])
+                                    }
+                                }
+
+                                // If no boolean params were selected, check for changed files
+                                if (!filesToProcess && changedFiles) {
+                                    echo 'Build triggered by changes in Dockerfiles.'
+                                    filesToProcess = changedFiles
+                                } else if (!filesToProcess) {
+                                    echo 'No Dockerfile changes detected and no boolean params selected.'
+                                }
                             }
 
                             if (filesToProcess) {
@@ -73,7 +72,7 @@ pipeline {
                                     def pathSegments = filePath.split('/')
 
                                     // Ensure we are in the correct directory for the Docker build
-                                    if (!filePath.startsWith("agents/")) {
+                                    if (!filePath.startsWith('agents/')) {
                                         filePath = "agents/${filePath}"
                                     }
 
@@ -117,13 +116,13 @@ def getChangedFiles() {
     if (currentBuild.changeSets) {
         currentBuild.changeSets.each { changeSet ->
             changeSet.items.each { item ->
-                def affectedFiles = item.affectedFiles.findAll { 
-                    it.path.contains("Dockerfile") && !it.path.contains("Jenkinsfile")
+                def affectedFiles = item.affectedFiles.findAll {
+                    it.path.contains('Dockerfile') && !it.path.contains('Jenkinsfile')
                 }.collect { [path: it.path] }
                 changedFiles.addAll(affectedFiles)
+                }
             }
         }
-    }
 
     return changedFiles.unique()
-}
+    }
