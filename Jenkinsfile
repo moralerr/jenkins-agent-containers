@@ -41,6 +41,8 @@ pipeline {
                                 echo 'Build triggered by changes in files.'
                                 // If changes detected, only process the changed Dockerfiles
                                 filesToProcess = changedFiles
+                            } else {
+                                echo 'No Dockerfile changes detected and not a cron build.'
                             }
 
                             if (filesToProcess) {
@@ -66,14 +68,12 @@ pipeline {
                                     echo "Processing: ${filePath}"
 
                                     // Docker image build, tag, and push commands
-                                    sh "docker build -t ${imageName}:latest -f ${filePath} ${filePath.substring(0, filePath.lastIndexOf('/'))}"
+                                    sh "docker build -t ${imageName}:latest -f ${filePath}"
                                     sh "docker tag ${imageName}:latest ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
                                     sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
                                 }
 
                                 sh 'docker logout'
-                            } else {
-                                echo 'No changes detected between this build and the previous one.'
                             }
                         }
                     }
@@ -92,19 +92,20 @@ def findAllDockerfiles(String directory) {
     return dockerfiles
 }
 
+// Function to get changed Dockerfiles and ignore other files like Jenkinsfile
 def getChangedFiles() {
     def changedFiles = []
 
     if (currentBuild.changeSets) {
         currentBuild.changeSets.each { changeSet ->
             changeSet.items.each { item ->
-                def affectedFiles = item.affectedFiles.findAll { it.path.contains('Dockerfile') }.collect {
-                    [path: it.path]
-            }
+                def affectedFiles = item.affectedFiles.findAll {
+                    it.path.contains('Dockerfile') && !it.path.contains('Jenkinsfile')
+                }.collect { [path: it.path] }
                 changedFiles.addAll(affectedFiles)
+                }
+            }
         }
-    }
-}
 
     return changedFiles.unique()
-}
+    }
