@@ -17,7 +17,6 @@ pipeline {
         IMAGE_VERSION = 'latest'
         REGISTRY_NAME = 'moralerr'
         REGISTRY_REPO = 'examples'
-
     }
     parameters {
         booleanParam(name: 'MAVEN', defaultValue: false, description: '')
@@ -30,23 +29,20 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
 
                         script {
-
-                            // Call the function to get the changed files
+                            def buildTriggeredByCron = currentBuild.getBuildCauses('org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty$CronTrigger') != null
                             def changedFiles = getChangedFiles()
 
-                            if (changedFiles) {
+                            if (changedFiles || buildTriggeredByCron) {
                                 // Login to Docker registry
                                 sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
 
-                                for (file in changedFiles) {
-
+                                def filesToProcess = changedFiles ?: [[path: 'Dockerfile']]
+                                
+                                for (file in filesToProcess) {
                                     def imageName = file.path.split('/')[-2]
-
                                     echo "Processing: ${file.path}"
 
-                                    // Your Docker image build, tag, and push commands here
-                                    // Make sure to properly handle the 'file' object here
-                                    // For example:
+                                    // Docker image build, tag, and push commands
                                     sh "docker build -t ${imageName}:latest -f ${file.path} ."
                                     sh "docker tag ${imageName}:latest ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
                                     sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
@@ -57,8 +53,6 @@ pipeline {
                             } else {
                                 echo "No changes detected between this build and the previous one."
                             }
-
-
                         }
                     }
                 }
@@ -66,8 +60,6 @@ pipeline {
         }
     }
 }
-
-
 
 def getChangedFiles() {
     def changedFiles = []
@@ -85,10 +77,3 @@ def getChangedFiles() {
 
     return changedFiles.unique()
 }
-
-def isParameterSetToTrue(paramName) {
-    return params.containsKey(paramName) && params.get(paramName).toString().equalsIgnoreCase("true")
-}
-
-
-
