@@ -17,4 +17,3 @@ RUN npm install -g @angular/cli
 # Switch back to the Jenkins user
 USER jenkins
 
-
