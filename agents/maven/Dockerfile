@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM jenkins/inbound-agent:3261.v9c670a_4748a_9-1
+FROM jenkins/inbound-agent:3273.v4cfe589b_fd83-1
 
 USER root
 
