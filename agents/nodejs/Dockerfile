@@ -8,13 +8,14 @@ USER root
 
 # Update package lists, install curl, and Node.js LTS
 RUN apt-get update && \
-    apt-get install -y curl && \
+    apt-get install -y --no-install-recommends curl && \
     curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
-    apt-get install -y nodejs
+    apt-get install -y --no-install-recommends nodejs && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Angular CLI globally using npm
 RUN npm install -g @angular/cli
 
 # Switch back to the Jenkins user
 USER jenkins
-
