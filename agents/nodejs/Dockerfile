@@ -14,6 +14,9 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Install latest npm version globally
+RUN npm install -g npm@latest
+
 # Install Angular CLI globally using npm
 RUN npm install -g @angular/cli
 
