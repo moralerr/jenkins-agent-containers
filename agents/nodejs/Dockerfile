@@ -5,6 +5,8 @@ FROM jenkins/inbound-agent:3273.v4cfe589b_fd83-1
 
 USER root
 
+RUN sed -i 's|http://deb.debian.org/debian|http://ftp.us.debian.org/debian|g' /etc/apt/sources.list
+
 # Install required packages and Node.js
 RUN apt-get update && \
     apt-get install -y curl && \
