@@ -3,22 +3,19 @@
 # Use the Jenkins inbound agent as the base image
 FROM jenkins/inbound-agent:3273.v4cfe589b_fd83-1
 
-# Switch to root user for installation
 USER root
 
-# Update package lists, install curl, and Node.js LTS
+# Install required packages and Node.js
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl && \
-    curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
-    apt-get install -y --no-install-recommends nodejs && \
+    apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g @angular/cli && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install latest npm version globally
-RUN npm install -g npm@latest
+# Verify installations
+RUN node --version && npm --version && ng version
 
-# Install Angular CLI globally using npm
-RUN npm install -g @angular/cli
-
-# Switch back to the Jenkins user
+# Switch back to Jenkins user
 USER jenkins
