@@ -1,21 +1,26 @@
 # syntax=docker/dockerfile:1
 
-# Use the Jenkins inbound agent as the base image
 FROM jenkins/inbound-agent:3273.v4cfe589b_fd83-1
 
 USER root
 
-# Install required packages and Node.js
-RUN apt-get update && \
-    apt-get install -y curl && \
-    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs && \
-    npm install -g @angular/cli && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive \
+    NODE_VERSION=18 \
+    NPM_CONFIG_LOGLEVEL=info
+
+# Install Node.js, npm, and Angular CLI
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
+    && apt-get update \
+    && apt-get install -y nodejs \
+    && npm install -g @angular/cli \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Verify installations
-RUN node --version && npm --version && ng version
+RUN node --version \
+    && npm --version \
+    && ng version
 
-# Switch back to Jenkins user
+# Switch back to the Jenkins user
 USER jenkins
