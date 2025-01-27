@@ -2,7 +2,6 @@
 
 FROM jenkins/inbound-agent:3273.v4cfe589b_fd83-1
 
-# Switch to root user for installation
 USER root
 
 # Set environment variables
