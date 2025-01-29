@@ -6,8 +6,11 @@ FROM jenkins/inbound-agent:3273.v4cfe589b_fd83-1
 # Switch to root user to install Maven
 USER root
 
-# Update package list and install Maven without recommended packages
-RUN apt-get update && apt install -y --no-install-recommends maven
+# Update package list, install Maven, and clean up
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends maven && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set the MAVEN_HOME environment variable
 ENV MAVEN_HOME /usr/share/maven

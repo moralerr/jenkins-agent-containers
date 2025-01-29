@@ -11,7 +11,9 @@ pipeline {
     }
     options {
         disableConcurrentBuilds()
-        timeout(time: 30, unit: 'MINUTES')
+        timeout(time: 20, unit: 'MINUTES')
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        retry(1)
     }
     environment {
         // Define environment variables
@@ -22,13 +24,17 @@ pipeline {
     parameters {
         booleanParam(name: 'MAVEN', defaultValue: false, description: 'Build the Maven agent image')
         booleanParam(name: 'NODEJS', defaultValue: false, description: 'Build the NodeJS agent image')
-    // Add more boolean params dynamically later
+        // Add more boolean params dynamically later
     }
     stages {
         stage('Build/Push Image') {
             steps {
                 container('dind') {
-                    withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    withCredentials([usernamePassword(
+                        credentialsId: 'DOCKER_HUB',
+                        usernameVariable: 'DOCKER_USERNAME',
+                        passwordVariable: 'DOCKER_PASSWORD'
+                    )]) {
                         script {
                             // Directly check if the build was triggered by cron or not
                             def buildCause = currentBuild.rawBuild.getCauses()[0].toString()
@@ -40,28 +46,7 @@ pipeline {
                             def filesToProcess = []
 
                             // Handle cron builds
-                            if (buildTriggeredByCron) {
-                                echo 'Build triggered by cron job. Processing all Dockerfiles.'
-                                filesToProcess = findAllDockerfiles('agents')
-                            } else {
-                                // Check for any boolean params that are selected
-                                params.each { paramName, paramValue ->
-                                    if (paramValue && paramName.toUpperCase() == paramName) {
-                                        def lowerCaseParam = paramName.toLowerCase()
-                                        def dockerfilePath = "agents/${lowerCaseParam}/Dockerfile"
-                                        echo "Building image for ${paramName} using path ${dockerfilePath}"
-                                        filesToProcess.add([path: dockerfilePath])
-                                    }
-                                }
-
-                                // If no boolean params were selected, check for changed files
-                                if (!filesToProcess && changedFiles) {
-                                    echo 'Build triggered by changes in Dockerfiles.'
-                                    filesToProcess = changedFiles
-                                } else if (!filesToProcess) {
-                                    echo 'No Dockerfile changes detected and no boolean params selected.'
-                                }
-                            }
+                            filesToProcess = getFilesToProcess(buildTriggeredByCron, changedFiles)
 
                             if (filesToProcess) {
                                 // Login to Docker registry
@@ -86,9 +71,16 @@ pipeline {
                                     echo "Processing: ${filePath}"
 
                                     // Docker image build, tag, and push commands
-                                    sh "docker build -t ${imageName}:latest -f ${filePath} ${filePath.substring(0, filePath.lastIndexOf('/'))}"
-                                    sh "docker tag ${imageName}:latest ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
-                                    sh "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:jenkins-${imageName}-agent-${IMAGE_VERSION}"
+                                    def buildCommand = "docker build -t ${imageName}:latest -f ${filePath} " +
+                                                      "${filePath.substring(0, filePath.lastIndexOf('/'))}"
+                                    sh buildCommand
+                                    def tagCommand = "docker tag ${imageName}:latest " +
+                                                    "${REGISTRY_NAME}/${REGISTRY_REPO}:" +
+                                                    "jenkins-${imageName}-agent-${IMAGE_VERSION}"
+                                    sh tagCommand
+                                    def pushCommand = "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:" +
+                                                     "jenkins-${imageName}-agent-${IMAGE_VERSION}"
+                                    sh pushCommand
                                 }
 
                                 sh 'docker logout'
@@ -126,4 +118,34 @@ def getChangedFiles() {
         }
 
     return changedFiles.unique()
+}
+
+// Function to get files to process based on build trigger and changed files
+def getFilesToProcess(buildTriggeredByCron, changedFiles) {
+    def filesToProcess = []
+
+    if (buildTriggeredByCron) {
+        echo 'Build triggered by cron job. Processing all Dockerfiles.'
+        filesToProcess = findAllDockerfiles('agents')
+    } else {
+        // Check for any boolean params that are selected
+        params.each { paramName, paramValue ->
+            if (paramValue && paramName.toUpperCase() == paramName) {
+            def lowerCaseParam = paramName.toLowerCase()
+                def dockerfilePath = "agents/${lowerCaseParam}/Dockerfile"
+                echo "Building image for ${paramName} using path ${dockerfilePath}"
+                filesToProcess.add([path: dockerfilePath])
+            }
+        }
+
+        // If no boolean params were selected, check for changed files
+        if (!filesToProcess && changedFiles) {
+            echo 'Build triggered by changes in Dockerfiles.'
+            filesToProcess = changedFiles
+        } else if (!filesToProcess) {
+            echo 'No Dockerfile changes detected and no boolean params selected.'
+        }
     }
+
+    return filesToProcess
+}
