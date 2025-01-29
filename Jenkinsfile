@@ -48,7 +48,43 @@ pipeline {
                             // Handle cron builds
                             filesToProcess = getFilesToProcess(buildTriggeredByCron, changedFiles)
 
-                            processFiles(filesToProcess)
+                            if (filesToProcess) {
+                                // Login to Docker registry
+                                sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
+
+                                for (file in filesToProcess) {
+                                    def imageName
+                                    def filePath = file.path
+                                    def pathSegments = filePath.split('/')
+
+                                    // Ensure we are in the correct directory for the Docker build
+                                    if (!filePath.startsWith('agents/')) {
+                                        filePath = "agents/${filePath}"
+                                    }
+
+                                    if (pathSegments.length > 1) {
+                                        imageName = pathSegments[-2]  // Use the folder name as the image name
+                                    } else {
+                                        imageName = pathSegments[0]   // Fallback for unusual paths
+                                    }
+
+                                    echo "Processing: ${filePath}"
+
+                                    // Docker image build, tag, and push commands
+                                    def buildCommand = "docker build -t ${imageName}:latest -f ${filePath} " +
+                                                      "${filePath.substring(0, filePath.lastIndexOf('/'))}"
+                                    sh buildCommand
+                                    def tagCommand = "docker tag ${imageName}:latest " +
+                                                    "${REGISTRY_NAME}/${REGISTRY_REPO}:" +
+                                                    "jenkins-${imageName}-agent-${IMAGE_VERSION}"
+                                    sh tagCommand
+                                    def pushCommand = "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:" +
+                                                     "jenkins-${imageName}-agent-${IMAGE_VERSION}"
+                                    sh pushCommand
+                                }
+
+                                sh 'docker logout'
+                            }
                         }
                     }
                 }
@@ -82,69 +118,20 @@ def getChangedFiles() {
         }
 
     return changedFiles.unique()
-    }
-// Function to find all Dockerfiles in the 'agents' directory
-def findAllDockerfiles(String directory) {
-    def dockerfiles = []
-    dir(directory) {
-        dockerfiles = findFiles(glob: '**/Dockerfile').collect { [path: it.path] }
-    }
-    return dockerfiles
 }
 
 // Function to get files to process based on build trigger and changed files
-// Function to find all Dockerfiles in the 'agents' directory
-def findAllDockerfiles(String directory) {
-    def dockerfiles = []
-    dir(directory) {
-        dockerfiles = findFiles(glob: '**/Dockerfile').collect { [path: it.path] }
-    }
-    return dockerfiles
-}
+def getFilesToProcess(buildTriggeredByCron, changedFiles) {
+    def filesToProcess = []
 
-// Function to process files
-def processFiles(filesToProcess) {
-    if (filesToProcess) {
-        // Login to Docker registry
-        sh 'echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin'
-
-        for (file in filesToProcess) {
-            def imageName
-            def filePath = file.path
-            def pathSegments = filePath.split('/')
-
-            // Ensure we are in the correct directory for the Docker build
-            if (!filePath.startsWith('agents/')) {
-                filePath = "agents/${filePath}"
-            }
-
-            if (pathSegments.length > 1) {
-                imageName = pathSegments[-2]  // Use the folder name as the image name
-            } else {
-                imageName = pathSegments[0]   // Fallback for unusual paths
-            }
-
-            echo "Processing: ${filePath}"
-
-            // Docker image build, tag, and push commands
-            def buildCommand = "docker build -t ${imageName}:latest -f ${filePath} " +
-                              "${filePath.substring(0, filePath.lastIndexOf('/'))}"
-            sh buildCommand
-            def tagCommand = "docker tag ${imageName}:latest " +
-                            "${REGISTRY_NAME}/${REGISTRY_REPO}:" +
-                            "jenkins-${imageName}-agent-${IMAGE_VERSION}"
-            sh tagCommand
-            def pushCommand = "docker push ${REGISTRY_NAME}/${REGISTRY_REPO}:" +
-                             "jenkins-${imageName}-agent-${IMAGE_VERSION}"
-            sh pushCommand
-        }
-
-        sh 'docker logout'
-    }
-}
+    if (buildTriggeredByCron) {
+        echo 'Build triggered by cron job. Processing all Dockerfiles.'
+        filesToProcess = findAllDockerfiles('agents')
+    } else {
+        // Check for any boolean params that are selected
         params.each { paramName, paramValue ->
             if (paramValue && paramName.toUpperCase() == paramName) {
-                def lowerCaseParam = paramName.toLowerCase()
+            def lowerCaseParam = paramName.toLowerCase()
                 def dockerfilePath = "agents/${lowerCaseParam}/Dockerfile"
                 echo "Building image for ${paramName} using path ${dockerfilePath}"
                 filesToProcess.add([path: dockerfilePath])
