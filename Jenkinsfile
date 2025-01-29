@@ -23,7 +23,7 @@ pipeline {
     parameters {
         booleanParam(name: 'MAVEN', defaultValue: false, description: 'Build the Maven agent image')
         booleanParam(name: 'NODEJS', defaultValue: false, description: 'Build the NodeJS agent image')
-    // Add more boolean params dynamically later
+        // Add more boolean params dynamically later
     }
     stages {
         stage('Build/Push Image') {
