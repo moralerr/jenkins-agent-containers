@@ -11,9 +11,8 @@ pipeline {
     }
     options {
         disableConcurrentBuilds()
-        timeout(time: 20, unit: 'MINUTES')
+        timeout(time: 16, unit: 'MINUTES')
         buildDiscarder(logRotator(numToKeepStr: '10'))
-        retry(1)
     }
     environment {
         // Define environment variables
