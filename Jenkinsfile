@@ -13,7 +13,6 @@ pipeline {
         disableConcurrentBuilds()
         timeout(time: 30, unit: 'MINUTES')
         buildDiscarder(logRotator(numToKeepStr: ''))
-        timestamps()
     }
     environment {
         // Define environment variables
