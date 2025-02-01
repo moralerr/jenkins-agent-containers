@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     println 'Building image'
-                    sh 'mv --version'
+                    sh 'mvn --version'
                 }
             }
         }
