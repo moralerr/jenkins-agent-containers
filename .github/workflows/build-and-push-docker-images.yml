@@ -22,14 +22,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push all Docker images in /agents
+      - name: Build and Push all Docker images in /agents and output tags
         run: |
+          pushed_images=""
           for dir in agents/*; do
             if [ -d "$dir" ] && [ -f "$dir/Dockerfile" ]; then
               agent=$(basename "$dir")
-              echo "Building Docker image for $agent..."
-              docker build -t moralerr/examples:jenkins-${agent}-agent-latest "$dir"
+              tag="moralerr/examples:jenkins-${agent}-agent-latest"
+              echo "Building Docker image for $agent with tag $tag..."
+              docker build -t "$tag" "$dir"
               echo "Pushing Docker image for $agent..."
-              docker push moralerr/examples:jenkins-${agent}-agent-latest
+              docker push "$tag"
+              pushed_images="$pushed_images $tag"
             fi
           done
+          echo "Images pushed:$pushed_images"
