@@ -8,11 +8,40 @@ pipeline {
         }
     }
     stages {
-        stage('Build/Push Image') {
+        stage('Check Versions') {
             steps {
                 script {
-                    println 'Building image'
-                    sh 'mvn --version'
+                    sh '''
+                        echo "Ansible version:"
+                        ansible --version
+
+                        echo "Git version:"
+                        git --version
+
+                        echo "jq version:"
+                        jq --version
+
+                        echo "LSB Release Info:"
+                        lsb_release -a
+
+                        echo "curl version:"
+                        curl --version
+
+                        echo "GPG version (from gnupg):"
+                        gpg --version
+
+                        echo "unzip version:"
+                        unzip -v
+
+                        echo "pip3 version:"
+                        pip3 --version
+
+                        echo "terraform version:"
+                        terraform --version
+
+                        echo "terragrunt version:"
+                        terragrunt --version
+                    '''
                 }
             }
         }
