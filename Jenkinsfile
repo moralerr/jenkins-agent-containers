@@ -3,7 +3,7 @@
 pipeline {
     agent{
         docker {
-            image 'moralerr/examples:jenkins-maven-agent-latest'
+            image 'moralerr/examples:jenkins-admin-agent-latest'
             label 'standalone'
         }
     }
