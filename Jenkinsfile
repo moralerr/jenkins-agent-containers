@@ -1,7 +1,7 @@
 @Library('pipeline-commons') _
 
 pipeline {
-    agent{
+    agent {
         docker {
             image 'moralerr/examples:jenkins-admin-agent-latest'
             label 'standalone'
@@ -46,11 +46,9 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            node {
-                cleanWs()
-            }
-        }
-    }
+    // post {
+    //     always {
+    //         cleanWs()
+    //     }
+    // }
 }
