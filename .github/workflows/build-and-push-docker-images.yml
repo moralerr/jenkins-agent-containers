@@ -28,8 +28,8 @@ jobs:
             if [ -d "$dir" ] && [ -f "$dir/Dockerfile" ]; then
               agent=$(basename "$dir")
               echo "Building Docker image for $agent..."
-              docker build -t moralerr/jenkins-agent-containers:$agent "$dir"
+              docker build -t moralerr/examples:jenkins-${agent}-agent-latest "$dir"
               echo "Pushing Docker image for $agent..."
-              docker push moralerr/jenkins-agent-containers:$agent
+              docker push moralerr/examples:jenkins-${agent}-agent-latest
             fi
           done
