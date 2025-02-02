@@ -15,17 +15,18 @@ RUN apt-get update && \
     software-properties-common && \
     rm -rf /var/lib/apt/lists/*
 
-
-# Install Terraform using HashiCorp's APT repository
-RUN apt-get update && apt-get install -y lsb-release apt-transport-https ca-certificates curl gnupg && \
-    curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
-    codename=$(lsb_release -cs) && \
-    if [ "$codename" = "bookworm" ]; then codename="bullseye"; fi && \
-    echo "deb [arch=amd64] https://apt.releases.hashicorp.com $codename main" > /etc/apt/sources.list.d/hashicorp.list && \
-    apt-get update && \
-    apt-get install -y terraform && \
-    rm -rf /var/lib/apt/lists/*
-
+# Install prerequisites and download Terraform manually for ARM64
+RUN apt-get update && \
+    apt-get install -y lsb-release apt-transport-https ca-certificates curl gnupg unzip && \
+    rm -rf /var/lib/apt/lists/* && \
+    \
+    # Set the Terraform version (update as needed)
+    TERRAFORM_VERSION=1.3.7 && \
+    echo "Downloading Terraform $TERRAFORM_VERSION for arm64..." && \
+    curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_arm64.zip -o terraform.zip && \
+    unzip terraform.zip && \
+    mv terraform /usr/local/bin/ && \
+    rm terraform.zip
 
 # Install Terragrunt (set the version as needed)
 ENV TERRAGRUNT_VERSION=0.48.7
