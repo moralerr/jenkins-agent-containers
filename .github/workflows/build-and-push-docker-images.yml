@@ -1,0 +1,37 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches: [ main, feature/* ]
+  pull_request:
+    branches: [ main, feature/* ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push all Docker images in /agents for arm64
+        run: |
+          pushed_images=""
+          for dir in agents/*; do
+            if [ -d "$dir" ] && [ -f "$dir/Dockerfile" ]; then
+              agent=$(basename "$dir")
+              tag="moralerr/examples:jenkins-${agent}-agent-latest"
+              echo "Building Docker image for $agent with tag $tag for arm64..."
+              docker buildx build --platform linux/arm64 -t "$tag" "$dir" --push
+              pushed_images="$pushed_images $tag"
+            fi
+          done
+          echo "Images pushed:$pushed_images"
