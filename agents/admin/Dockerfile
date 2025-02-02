@@ -31,7 +31,7 @@ RUN apt-get update && \
 # Install Terragrunt (set the version as needed)
 ENV TERRAGRUNT_VERSION=0.48.7
 RUN curl -fsSL -o /tmp/terragrunt \
-    https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 && \
+    https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_arm64 && \
     chmod +x /tmp/terragrunt && \
     mv /tmp/terragrunt /usr/local/bin/terragrunt
 
