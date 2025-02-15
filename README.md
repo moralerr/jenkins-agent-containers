@@ -1,4 +1,4 @@
-# Agent Build Containers
+# Agent Build Containers ![Build and Push Docker Images](https://github.com/moralerr/jenkins-agent-containers/actions/workflows/build-and-push-docker-images.yml/badge.svg)
 
 Based off https://github.com/jenkinsci/docker-agent/blob/master/debian/Dockerfile
 
