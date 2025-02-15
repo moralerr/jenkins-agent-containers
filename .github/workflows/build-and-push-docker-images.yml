@@ -5,6 +5,8 @@ on:
     branches: [ main, feature/* ]
   pull_request:
     branches: [ main, feature/* ]
+  schedule:
+    - cron: '0 8 * * *'
 
 jobs:
   build-and-push:
