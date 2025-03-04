@@ -16,11 +16,6 @@ RUN apt-get update && \
     software-properties-common && \
     rm -rf /var/lib/apt/lists/*
 
-# Create a virtual environment and upgrade the requests library
-RUN python3 -m venv /opt/venv && \
-    /opt/venv/bin/pip install --upgrade pip && \
-    /opt/venv/bin/pip install requests
-
 # Install prerequisites and download Terraform manually for ARM64
 RUN apt-get update && \
     apt-get install -y lsb-release apt-transport-https ca-certificates curl gnupg unzip && \
