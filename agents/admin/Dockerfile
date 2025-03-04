@@ -12,7 +12,6 @@ RUN apt-get update && \
     gnupg \
     unzip \
     python3-pip \
-    python3-venv \
     software-properties-common && \
     rm -rf /var/lib/apt/lists/*
 
@@ -35,8 +34,5 @@ RUN curl -fsSL -o /tmp/terragrunt \
     https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_arm64 && \
     chmod +x /tmp/terragrunt && \
     mv /tmp/terragrunt /usr/local/bin/terragrunt
-
-# Set the virtual environment path
-ENV PATH="/opt/venv/bin:$PATH"
 
 USER jenkins
