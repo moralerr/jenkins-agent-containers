@@ -15,6 +15,9 @@ RUN apt-get update && \
     software-properties-common && \
     rm -rf /var/lib/apt/lists/*
 
+# Upgrade the requests library
+RUN pip3 install --upgrade requests
+
 # Install prerequisites and download Terraform manually for ARM64
 RUN apt-get update && \
     apt-get install -y lsb-release apt-transport-https ca-certificates curl gnupg unzip && \
