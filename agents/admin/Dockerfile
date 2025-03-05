@@ -16,7 +16,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Ansible via pip for the latest version
-RUN pip3 install --no-cache-dir ansible
+RUN pip3 install --no-cache-dir ansible --break-system-packages
 
 # Install prerequisites and download Terraform manually for ARM64
 RUN apt-get update && \
