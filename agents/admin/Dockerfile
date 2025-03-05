@@ -4,16 +4,19 @@ USER root
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    ansible \
     git \
     jq \
     lsb-release \
     curl \
     gnupg \
     unzip \
+    python3 \
     python3-pip \
     software-properties-common && \
     rm -rf /var/lib/apt/lists/*
+
+# Install Ansible via pip for the latest version
+RUN pip3 install --no-cache-dir ansible
 
 # Install prerequisites and download Terraform manually for ARM64
 RUN apt-get update && \
