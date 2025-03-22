@@ -15,11 +15,10 @@ RUN apt-get update && \
     software-properties-common && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Ansible via pip for the latest version
-RUN pip3 install --no-cache-dir ansible==9.4.0 --break-system-packages
-
-# Fix urllib3 compatibility issue with Ansible
-RUN pip3 install --no-cache-dir urllib3==1.26.18 --break-system-packages
+# Install Ansible via pip with compatible urllib3 version
+RUN pip3 install --no-cache-dir ansible==9.4.0 --break-system-packages && \
+    pip3 install --no-cache-dir urllib3==1.26.18 --break-system-packages && \
+    pip3 install --no-cache-dir jmespath kubernetes netaddr --break-system-packages
 
 # Install prerequisites and download Terraform manually for ARM64
 RUN apt-get update && \
