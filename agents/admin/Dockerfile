@@ -18,6 +18,9 @@ RUN apt-get update && \
 # Install Ansible via pip for the latest version
 RUN pip3 install --no-cache-dir ansible==9.4.0 --break-system-packages
 
+# Fix urllib3 compatibility issue with Ansible
+RUN pip3 install --no-cache-dir urllib3==1.26.18 --break-system-packages
+
 # Install prerequisites and download Terraform manually for ARM64
 RUN apt-get update && \
     apt-get install -y lsb-release apt-transport-https ca-certificates curl gnupg unzip && \
