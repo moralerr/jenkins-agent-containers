@@ -41,7 +41,6 @@ pipeline {
 
                         echo "terragrunt version:"
                         terragrunt --version
-                        
                     '''
                 }
             }
